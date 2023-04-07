@@ -1,27 +1,25 @@
 import { Component } from "react";
-import { getApiPixabay } from "./api";
 import { Searchbar } from "./Searchbar/Searchbar";
+import { ImageGallery } from "./ImageGallery/ImageGallery";
 
 export class App extends Component {
   state = {
-    image: [],
-    query: '',
-    page: 1,
+    valueSearch: '',
   }
+
   createQuery = (valueSearch) => {
-    this.setState({ query: valueSearch });
-    getApiPixabay(this.state.query, this.state.page).then(image => this.setState({image}));
+    return this.setState({ valueSearch });
   };
   
   render() {
       return (
         <div>
 <Searchbar queryValue={this.createQuery}></Searchbar>
-          <ul>
+          <ImageGallery valueSearch={this.state.valueSearch}>
 <li>
   <img src="" alt="" />
             </li>
-          </ul>
+          </ImageGallery>
           <button type="submit">
       <span>Load more</span>
           </button>

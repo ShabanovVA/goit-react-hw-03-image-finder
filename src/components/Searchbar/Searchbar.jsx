@@ -14,7 +14,6 @@ export class Searchbar extends Component {
       this.props.queryValue(this.state.query);
       this.reset();
       }
-
     reset = () => {
         this.setState({ query: '' })
     }
