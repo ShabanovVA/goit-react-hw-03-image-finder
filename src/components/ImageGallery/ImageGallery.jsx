@@ -1,34 +1,21 @@
-import { Component } from "react";
-import { getApiPixabay } from "components/api";
+import React from "react";
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 
-export class ImageGallery extends Component {
-    state = {
-        dataImg: [],
-        page: 1,
-    };
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.valueSearch !== this.props.valueSearch) {
-            getApiPixabay(this.props.valueSearch, this.state.page).then(response =>
-                this.setState({ dataImg: response.data.hits }))
-        };
-    }
-
-    render() {
+    const ImageGallery = ({images}) => {
         return (
             <ul>
-                {this.state.dataImg.map(({id, webformatURL, largeImageURL, tag}) => {
+                {images.map(({ id, webformatURL, largeImageURL, tags }) => {
                     return (
                         <ImageGalleryItem
                             key={id}
-                            smallImg={webformatURL}
-                            normalImg={largeImageURL}
-                            tag={tag}
+                            webformatURL={webformatURL}
+                            largeImageURL={largeImageURL}
+                            tags={tags}
                         />
                     );
                 })}
             </ul>
-        );
-    };
-}
+        )
+    }
+
+export { ImageGallery };

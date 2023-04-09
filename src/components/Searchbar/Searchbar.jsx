@@ -19,24 +19,24 @@ export class Searchbar extends Component {
     }
     
     render() {
-        return (
-    <header>
-  <form onSubmit={this.handleSubmit}>
-    <button type="submit">
-      <span>Search</span>
-    </button>
+      return (
+        <header>
+          <form onSubmit={this.handleSubmit}>
+            <button type="submit">
+              <span>Search</span>
+            </button>
 
-    <input
-      type="text"
-      autoComplete="off"
-      autoFocus
-      placeholder="Search images and photos"
-      name="query"
-      value={this.state.query}
-      onChange={this.onChange}
-    />
-  </form>
-          </header>
-        )
+            <input
+              type="text"
+              autoComplete="off"
+              autoFocus
+              placeholder="Search images and photos"
+              name="query"
+              value={this.state.query}
+              onChange={this.onChange}
+            />
+          </form>
+        </header>
+      )
     }
 }

@@ -1,9 +1,11 @@
-const ImageGalleryItem = ({id, smallImg, tag}) => {
+import React from "react";
+
+const ImageGalleryItem = ({ id, webformatURL, tags,largeImageURL }) => {
     return (
         < li key={id}>
             <img
-                src={smallImg}
-                alt={tag}
+                src={webformatURL}
+                alt={tags}
                 width="270px"
                 height="200px" />
         </li>
