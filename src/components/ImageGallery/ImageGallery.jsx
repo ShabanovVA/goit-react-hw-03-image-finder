@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { getApiPixabay } from "components/api";
+import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 
 export class ImageGallery extends Component {
     state = {
@@ -8,15 +9,25 @@ export class ImageGallery extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        getApiPixabay(this.props.valueSearch, this.state.page).then(dataImg => this.setState({ dataImg }));
-}
+        if (prevProps.valueSearch !== this.props.valueSearch) {
+            getApiPixabay(this.props.valueSearch, this.state.page).then(response =>
+                this.setState({ dataImg: response.data.hits }))
+        };
+    }
 
     render() {
         return (
             <ul>
-                <li>
-                    <img src="" alt="" />
-                </li>
+                {this.state.dataImg.map(({id, webformatURL, largeImageURL, tag}) => {
+                    return (
+                        <ImageGalleryItem
+                            key={id}
+                            smallImg={webformatURL}
+                            normalImg={largeImageURL}
+                            tag={tag}
+                        />
+                    );
+                })}
             </ul>
         );
     };
