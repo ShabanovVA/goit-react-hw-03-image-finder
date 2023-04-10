@@ -2,37 +2,65 @@ import { Component } from "react";
 import { Searchbar } from "./Searchbar/Searchbar";
 import { getApiPixabay } from "components/api";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
+import { Button } from "./Button/Button";
 
 export class App extends Component {
   state = {
-    valueSearch: null,
+    valueSearch: '',
     images: [],
     page: 1,
+    isShowBtn: false,
+    isLoading:false,
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_, prevState) {
     const { valueSearch, page } = this.state;
-    
-    if (prevState.valueSearch !== valueSearch) {
-      getApiPixabay(valueSearch, page).then(response =>
-      this.setState({ images: response.data.hits }))
-    };
-  };
+    if (prevState.valueSearch !== valueSearch || prevState.page !== page) {
+      this.getImages(valueSearch, page)
+    }
+  }
 
-  createQuery = (valueSearch) => {
-    this.setState({ valueSearch });
+  getImages = async(valueSearch, page) => {
+    try {
+      this.setState({ isLoading: true });
+      await getApiPixabay(valueSearch, page).then(response => {
+        this.setState(prevState => ({
+          images: [...prevState.images, ...response.data.hits],
+          isShowBtn: response.data.totalHits > (prevState.images.length + response.data.hits.length)
+        }));
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false})
+    }
+  }
+
+  handleCreateQuery = (query) => {
+    this.setState({
+      valueSearch: query,
+      images: [],
+      page: 1,
+      isShowBtn: false,
+    });
   };
   
+  handleLoadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
+  };
+
   render() {
-    const { images } = this.state;
+    const { images, isShowBtn, isLoading, valueSearch} = this.state;
 
     return (
       <div>
-        <Searchbar queryValue={this.createQuery}></Searchbar>
-        <ImageGallery images={images} />
-        <button type="submit">
-          <span>Load more</span>
-        </button>
+        <Searchbar queryValue={this.handleCreateQuery}></Searchbar>
+        {valueSearch.trim().length > 0 && images.length > 0 && <ImageGallery images={images} />}
+        {!isShowBtn && (<h3>There are no images...</h3>)}
+        {isShowBtn && <Button loadMore={this.handleLoadMore} />}
+        {isLoading && <p>Loading....</p>}
         <div>
           <div>
             <img src="" alt="" />
