@@ -4,6 +4,8 @@ import { Searchbar } from "./Searchbar/Searchbar";
 import { getApiPixabay } from "components/api";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Button } from "./Button/Button";
+import { Loader } from "./Loader/Loader";
+import { Modal } from "./Modal/Modal";
 
 export class App extends Component {
   state = {
@@ -14,6 +16,7 @@ export class App extends Component {
     isLoading: false,
     isEmpty: false,
     PER_PAGE: 12,
+    isShowModal: false,
   }
 
   componentDidUpdate(_, prevState) {
@@ -66,11 +69,9 @@ export class App extends Component {
         {valueSearch.trim().length > 0 && images.length > 0 && <ImageGallery images={images} />}
         {isEmpty && (<h3>There are no images...</h3>)}
         {isShowBtn && <Button loadMore={this.handleLoadMore} />}
-        {isLoading && <p>Loading....</p>}
+        {isLoading && <Loader/>}
         <div>
-          <div>
-            <img src="" alt="" />
-          </div>
+        <Modal/>
         </div>
         <ToastContainer position="top-center" autoClose={3000} theme="colored"/>
       </div>
