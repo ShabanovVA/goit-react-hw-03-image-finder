@@ -1,21 +1,25 @@
 import React from "react";
-import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
+import PropTypes from "prop-types";
+import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
+import { GalleryList } from "./ImageGallery.styled";
 
-    const ImageGallery = ({images}) => {
-        return (
-            <ul>
-                {images.map(({ id, webformatURL, largeImageURL, tags }) => {
-                    return (
-                        <ImageGalleryItem
-                            key={id}
-                            webformatURL={webformatURL}
-                            largeImageURL={largeImageURL}
-                            tags={tags}
-                        />
-                    );
-                })}
-            </ul>
-        )
-    }
+export const ImageGallery = ({ images }) => {
+  return (
+    images && (
+        <GalleryList>
+          {images.map(({ webformatURL, id, tags, largeImageURL }) => (
+            <ImageGalleryItem
+              key={id}
+              webformatURL={webformatURL}
+              tags={tags}
+              largeImageURL={largeImageURL}
+            />
+          ))}
+        </GalleryList>
+    )
+  );
+};
 
-export { ImageGallery };
+ImageGallery.propTypes = {
+  images: PropTypes.array.isRequired,
+};

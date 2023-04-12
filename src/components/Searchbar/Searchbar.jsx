@@ -1,6 +1,8 @@
 import { Component } from "react";
 import { toast } from 'react-toastify';
+import { FcSearch } from "react-icons/fc";
 import 'react-toastify/dist/ReactToastify.css';
+import { SearchFormInput,SearchbarContainer,SearchForm ,SearchFormButton } from "./Searchbar.styled";
 
 
 export class Searchbar extends Component {
@@ -29,13 +31,13 @@ export class Searchbar extends Component {
     
     render() {
       return (
-        <header>
-          <form onSubmit={this.handleSubmit}>
-            <button type="submit">
-              <span>Search</span>
-            </button>
+        <SearchbarContainer>
+          <SearchForm onSubmit={this.handleSubmit}>
+            <SearchFormButton type="submit">
+                <FcSearch size={24} />
+            </SearchFormButton>
 
-            <input
+            <SearchFormInput
               type="text"
               autoComplete="off"
               autoFocus
@@ -44,8 +46,8 @@ export class Searchbar extends Component {
               value={this.state.query}
               onChange={this.onChange}
             />
-          </form>
-        </header>
+          </SearchForm>
+        </SearchbarContainer>
       )
     }
 }

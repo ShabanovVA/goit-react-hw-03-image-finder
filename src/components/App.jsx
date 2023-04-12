@@ -1,11 +1,10 @@
 import { Component } from "react";
 import { ToastContainer} from 'react-toastify';
 import { Searchbar } from "./Searchbar/Searchbar";
-import { getApiPixabay } from "components/api";
+import { getApiPixabay } from "components/ApiPixabay/api";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Button } from "./Button/Button";
 import { Loader } from "./Loader/Loader";
-import { Modal } from "./Modal/Modal";
 
 export class App extends Component {
   state = {
@@ -71,7 +70,6 @@ export class App extends Component {
         {isShowBtn && <Button loadMore={this.handleLoadMore} />}
         {isLoading && <Loader/>}
         <div>
-        <Modal/>
         </div>
         <ToastContainer position="top-center" autoClose={3000} theme="colored"/>
       </div>
