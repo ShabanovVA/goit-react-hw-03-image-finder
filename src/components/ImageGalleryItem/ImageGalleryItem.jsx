@@ -10,6 +10,13 @@ export default class ImageGalleryItem extends Component {
 
   toggleModal = () => {
     this.setState((prev) => ({ showModal: !prev.showModal }));
+
+    if ({ showModal: true }) {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
   };
 
   render() {
